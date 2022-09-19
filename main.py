@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 import ssh_client_view
 import time
+import json
 
 def check_client():
   s = ""
@@ -22,6 +23,11 @@ def check_client():
 
 old = {}
 while(True):
+  # 設定読み込み
+  with open("./config.json", "r") as f:
+    conf = json.loads(f.read())
+  print(conf)
+
   new = ssh_client_view.main()
   ret = check_client()
 
@@ -34,4 +40,4 @@ while(True):
     print(ret)
 
   old = new
-  time.sleep(5)
+  time.sleep(conf["interval"])
