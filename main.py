@@ -2,8 +2,6 @@
 import ssh_client_view
 import time
 
-old = {}
-
 def check_client():
   s = ""
   # 増えたクライアントを確認
@@ -22,6 +20,7 @@ def check_client():
 
   return s
 
+old = {}
 while(True):
   new = ssh_client_view.main()
   ret = check_client()
@@ -30,7 +29,7 @@ while(True):
     ret = ret+f"\n\ncurrent clients"
     for i in new.keys():
       ret = ret+f"\n{i}:{new[i]}"
-    ret = ret+"\n\n"
+    ret = ret+"\n"
     print(ret)
 
   old = new
