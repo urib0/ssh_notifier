@@ -25,6 +25,7 @@ while(True):
   new = ssh_client_view.main()
   ret = check_client()
 
+  # 増減があれば現在のクライアントを追加
   if 0 != len(ret):
     ret = ret+f"\n\ncurrent clients"
     for i in new.keys():
