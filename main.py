@@ -2,13 +2,14 @@
 import ssh_client_view
 import time
 import json
+import requests
 
 def check_client():
   s = ""
   # 増えたクライアントを確認
   ret = {i:new[i] for i in new.keys() if i not in old.keys()}
   if 0 != len(ret):
-    s = s+f"join clients"
+    s = s+f"\njoin clients"
     for i in ret.keys():
       s = s+f"\n{i}:{ret[i]}"
 
@@ -21,12 +22,21 @@ def check_client():
 
   return s
 
+def send_message(token,message):
+    headers = {
+        "Authorization": "Bearer " + token,
+    }
+    files = {
+        "message": (None, message),
+    }
+    res = requests.post("https://notify-api.line.me/api/notify", headers=headers, files=files)
+    print(res)
+
 old = {}
 while(True):
   # 設定読み込み
   with open("./config.json", "r") as f:
     conf = json.loads(f.read())
-  print(conf)
 
   new = ssh_client_view.main()
   ret = check_client()
@@ -38,6 +48,9 @@ while(True):
       ret = ret+f"\n{i}:{new[i]}"
     ret = ret+"\n"
     print(ret)
+
+    # line送信
+    send_message(conf["line_token"],ret)
 
   old = new
   time.sleep(conf["interval"])
