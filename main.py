@@ -26,27 +26,27 @@ def main():
     incr = {i:new[i] for i in new.keys() if i not in old.keys()}
     decr = {i:old[i] for i in old.keys() if i not in new.keys()}
 
-    s = ""
+    msg = ""
     if 0 != len(incr):
-      s = s+f"\n- join clients\n"
+      msg = msg+f"\n- join clients\n"
       for i in incr.keys():
-        s = s+f"{i}:{incr[i]}\n"
+        msg = msg+f"{i}:{incr[i]}\n"
 
     if 0 != len(decr):
-      s = s+f"\n- leave clients\n"
+      msg = msg+f"\n- leave clients\n"
       for i in decr.keys():
-        s = s+f"{i}:{decr[i]}\n"
+        msg = msg+f"{i}:{decr[i]}\n"
 
     # 増減があれば現在のクライアントを追加
-    if 0 != len(s):
-      s = s+f"\n- current clients\n"
+    if 0 != len(msg):
+      msg = msg+f"\n- current clients\n"
       for i in new.keys():
-        s = s+f"{i}:{new[i]}\n"
-      s = s+"\n"
-      print(s)
+        msg = msg+f"{i}:{new[i]}\n"
+      msg = msg+"\n"
 
       # line送信
-      send_message(conf["line_token"],s)
+      send_message(conf["line_token"],msg)
+      print(msg)
 
     old = new
     print(dt.datetime.now())
