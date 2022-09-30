@@ -9,16 +9,16 @@ def check_client():
   # 増えたクライアントを確認
   ret = {i:new[i] for i in new.keys() if i not in old.keys()}
   if 0 != len(ret):
-    s = s+f"\njoin clients"
+    s = s+f"\n- join clients\n"
     for i in ret.keys():
-      s = s+f"\n{i}:{ret[i]}"
+      s = s+f"{i}:{ret[i]}\n"
 
   # 減ったクライアントを確認
   ret = {i:old[i] for i in old.keys() if i not in new.keys()}
   if 0 != len(ret):
-    s = s+f"\n\nleave clients"
+    s = s+f"\n- leave clients\n"
     for i in ret.keys():
-      s = s+f"\n{i}:{ret[i]}"
+      s = s+f"{i}:{ret[i]}\n"
 
   return s
 
@@ -43,9 +43,9 @@ while(True):
 
   # 増減があれば現在のクライアントを追加
   if 0 != len(ret):
-    ret = ret+f"\n\ncurrent clients"
+    ret = ret+f"\n- current clients\n"
     for i in new.keys():
-      ret = ret+f"\n{i}:{new[i]}"
+      ret = ret+f"{i}:{new[i]}\n"
     ret = ret+"\n"
     print(ret)
 
