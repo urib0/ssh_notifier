@@ -22,27 +22,27 @@ def main():
     with open("./config.json", "r") as f:
       conf = json.loads(f.read())
 
+    # 現在のクライアントを取得
     new = ssh_client_view.main()
-    incr = {i:new[i] for i in new.keys() if i not in old.keys()}
-    decr = {i:old[i] for i in old.keys() if i not in new.keys()}
 
     msg = ""
+
+    # クライアントが増えていればメッセージに追加
+    incr = {i:new[i] for i in new.keys() if i not in old.keys()}
     if 0 != len(incr):
       msg = msg+f"\n- join clients\n"
-      for i in incr.keys():
-        msg = msg+f"{i}:{incr[i]}\n"
+      msg = msg+"".join([f"{i}:{incr[i]}\n" for i in incr.keys()])
 
+    # クライアントが減っていればメッセージに追加
+    decr = {i:old[i] for i in old.keys() if i not in new.keys()}
     if 0 != len(decr):
       msg = msg+f"\n- leave clients\n"
-      for i in decr.keys():
-        msg = msg+f"{i}:{decr[i]}\n"
+      msg = msg+"".join([f"{i}:{decr[i]}\n" for i in decr.keys()])
 
     # 増減があれば現在のクライアントを追加
     if 0 != len(msg):
       msg = msg+f"\n- current clients\n"
-      for i in new.keys():
-        msg = msg+f"{i}:{new[i]}\n"
-      msg = msg+"\n"
+      msg = msg+"".join([f"{i}:{new[i]}\n" for i in new.keys()])
 
       # line送信
       send_message(conf["line_token"],msg)
