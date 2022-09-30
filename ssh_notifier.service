@@ -1,0 +1,14 @@
+[Unit]
+Description= service
+After=network.target auditd.service
+
+[Service]
+EnvironmentFile=/etc/sysconfig/ubuntu
+User=ubuntu
+Group=ubuntu
+WorkingDirectory=/home/ubuntu/work/ssh_notifier
+ExecStart=python3 /home/ubuntu/work/ssh_notifier/main.py
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
