@@ -30,7 +30,6 @@ def send_message(token,message):
         "message": (None, message),
     }
     res = requests.post("https://notify-api.line.me/api/notify", headers=headers, files=files)
-    print(res)
 
 old = {}
 while(True):
