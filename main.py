@@ -46,7 +46,7 @@ def main():
       print(s)
 
       # line送信
-#      send_message(conf["line_token"],ret)
+      send_message(conf["line_token"],s)
 
     old = new
     print(dt.datetime.now())
